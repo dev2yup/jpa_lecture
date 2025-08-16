@@ -25,13 +25,20 @@ public class JpaMain {
             member.setTeam(team);
             em.persist(member);
 
+            team.getMembers().add(member);
+
             em.flush();
             em.clear();
 
             Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers(); // 역방향 조회
 
             Team findTeam = findMember.getTeam();
             System.out.println("findTeam.getName() = " + findTeam.getName());
+
+            for (Member m : members) {
+                System.out.println("m.getUsername() = " + m.getUsername());
+            }
             
             tx.commit();
         }catch (Exception e) {

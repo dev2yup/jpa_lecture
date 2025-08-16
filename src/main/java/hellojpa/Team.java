@@ -13,9 +13,9 @@ public class Team {
     @Column(name = "TEAM_ID")
     private Long id;
 
-    // mappedBy로 연관관계 주인 지정(Member의 team이 연관관계 주인)
-    // 주인이 아닌 쪽은 읽기만 가능
-    @OneToMany(mappedBy = "team") // 양방향 매핑
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID") // 일대다 단방향
+    //단점: 연관관계 관리를 위해 추가로 UPDATE SQL 실행 -> 다대일 양방향 매핑 사용을 지양하자
     private List<Member> members = new ArrayList<>();
 
     private String name;

@@ -48,4 +48,9 @@ public class Member {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    public void changeTeam(Team team) { // 연관관계 편의 메서드 1에 만들어도 되고 N에 넣어도 됨
+        this.team = team;
+        team.getMembers().add(this);
+    }
 }

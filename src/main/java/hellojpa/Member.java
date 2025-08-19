@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 
@@ -21,10 +23,13 @@ public class Member {
     @ManyToOne
     private Team team;
 
-    // 대상 테이블에 외래 키 단방향은 지원 X
-    @OneToOne // 일대일 양방향 (외래키가 있는 곳이 연관관계 주인)
+    @OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
+
+    @ManyToMany
+    @JoinTable(name = "MEMBER_PRODUCT")
+    private List<Product> products = new ArrayList<>();
 
     public Long getId() {
         return id;

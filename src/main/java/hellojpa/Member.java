@@ -18,11 +18,13 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
-
     @ManyToOne
     private Team team;
+
+    // 대상 테이블에 외래 키 단방향은 지원 X
+    @OneToOne // 일대일 양방향 (외래키가 있는 곳이 연관관계 주인)
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public Long getId() {
         return id;

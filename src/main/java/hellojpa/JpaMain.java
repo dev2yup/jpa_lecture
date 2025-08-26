@@ -16,10 +16,8 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("user1");
-            member.setCreatedBy("Lee");
-            member.setCreatedDate(LocalDateTime.now());
+            Member member = em.find(Member.class, 1L);
+            printMemberAndTeam(member);
 
             em.persist(member);
 
@@ -34,5 +32,16 @@ public class JpaMain {
         }
 
         emf.close();
+    }
+    
+    public static void printMember(Member member) {
+        System.out.println("member.getUsername() = " + member.getUsername());
+    }
+
+    public static void printMemberAndTeam(Member member)  {
+        String userName = member.getUsername();
+        System.out.println("userName = " + userName);
+        Team team = member.getTeam();
+        System.out.println("team = " + team.getName());
     }
 }

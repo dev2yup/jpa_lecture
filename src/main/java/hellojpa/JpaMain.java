@@ -17,20 +17,25 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
             Member member = new Member();
             member.setUsername("hello");
+            member.setTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member.getId());
-            System.out.println("findMember.getClass() = " + refMember.getClass());
+            Member m = em.find(Member.class, member.getId());
 
-            Hibernate.initialize(refMember); // 강제 초기화 방법 (Hibernate 지원 - JPA 표준은 강제 초기화 X)
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember)); // 프록시 인스턴스 초기화 여부 확인
+            System.out.println("m = " + m.getTeam().getClass());
 
-
+            System.out.println("====================");
+            m.getTeam().getName();
+            System.out.println("====================");
 
             tx.commit();
         }catch (Exception e) {
